@@ -32,6 +32,7 @@ $(document).ready(function() {
  	var crstr = "&copy; "+year+"<br>";
  	$('footer').empty().append(crstr);
  	$(".resetButton").css("opacity","0")
+ 	
  	$(".startButton").on("click", function() {
  		rt = setInterval(runTimer,1000)
  		$("#mainContainer").removeClass("dispHide")//
@@ -39,10 +40,14 @@ $(document).ready(function() {
  		$("#doneButton").removeClass("dispHide")
 		$(".startButton").css("opacity","0")
  	})
+
  	$("#doneButton").on("click", function() {
+ 		$("#correctAudio").trigger("play");
+ 		$("#tUp img").attr("src","./assets/images/results.png");
  		clearInterval(rt)
  		checkAnswers()
  	})
+ 	
  	$(".resetButton").on("click", function() {
  		secs = "30"
  		$("#countdown").empty();
@@ -61,6 +66,7 @@ $(document).ready(function() {
 		$(".resetButton").css("opacity","0")
 		$("#quizResult").addClass("dispHide")
  	});
+
 })
 
 /*
@@ -70,8 +76,8 @@ $(document).ready(function() {
  #  AUTHOR        : Maricel Louise Sumulong
  #  DATE          : January 22, 2019 PST 
  #  MODIFIED BY   : Maricel Louise Sumulong
- #  REVISION DATE : January 24, 2019 PST
- #  REVISION #    : 1
+ #  REVISION DATE : January 26, 2019 PST
+ #  REVISION #    : 2
  #  DESCRIPTION   : runs the timer
  #  PARAMETERS    : 
  #
@@ -102,9 +108,13 @@ function runTimer() {
 	}
 
 	if (s < 0) {
+		$("#wrongAudio").trigger("play");
 		clearInterval(rt)
 		checkAnswers()
-	}
+	} else if (s < 10) {
+		$("#tUp img").attr("src","./assets/images/timesUp.png");
+		$("#timerAudio").trigger("play");
+	  }
 
 	secs = ""+s 
 
